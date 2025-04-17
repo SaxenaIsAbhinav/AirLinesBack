@@ -2,16 +2,16 @@ package com.flightbookingapp.entity;
 
 
 public class LoginRequest {
-    private String username;
+    private String emailId;
     private String password;
 
     // Getters and setters
-    public String getUsername() {
-        return username;
+    public String getEmailId() {
+        return emailId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
     }
 
     public String getPassword() {

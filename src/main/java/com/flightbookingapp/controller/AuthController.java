@@ -1,9 +1,9 @@
 package com.flightbookingapp.controller;// AuthController.java
 
 import com.flightbookingapp.entity.LoginRequest;
+import com.flightbookingapp.entity.PassengerDetails;
 import com.flightbookingapp.entity.User;
 import com.flightbookingapp.service.UserService;
-import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,19 +29,19 @@ public class AuthController {
     @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
+        String emailId = loginRequest.getEmailId();
 String password = loginRequest.getPassword();
 
-        Optional<User> user = userService.authenticateUser(username, password);
-        if (user.isPresent()) {
+        PassengerDetails user = userService.authenticateUser(emailId, password);
+        if (null != user) {
             // Generate a fake JWT token for demonstration purposes
             String token = "fake-jwt-token";
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
-            response.put("user", user.get());
+            response.put("user", user);
             return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(401).body("Invalid username or password");
+            return ResponseEntity.status(401).body("Invalid emailId or password");
         }
     }
 }

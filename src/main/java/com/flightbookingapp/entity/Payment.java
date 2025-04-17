@@ -1,5 +1,8 @@
 package com.flightbookingapp.entity;
 
+//payment.java-->entity package
+
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,7 +43,6 @@ public class Payment {
     private String airline;
 
     // Getters and Setters
-
     public Integer getPnr() {
         return pnr;
     }
@@ -121,3 +123,11 @@ public class Payment {
         this.airline = airline;
     }
 }
+
+
+
+
+
+
+
+

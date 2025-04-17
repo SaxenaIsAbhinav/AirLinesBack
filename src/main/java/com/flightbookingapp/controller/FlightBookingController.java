@@ -1,13 +1,12 @@
 package com.flightbookingapp.controller;
 
 import com.flightbookingapp.entity.PassengerDetails;
-import com.flightbookingapp.entity.TicketDetails;
+import com.flightbookingapp.entity.Payment;
 import com.flightbookingapp.service.FlightBookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -63,9 +62,9 @@ public class FlightBookingController {
     // __________________________FETCHING TICKET DETAILS THROUGH PNR_____________________
     @CrossOrigin
     @GetMapping(value="TicketDetails/{pnr}")
-    public ResponseEntity<TicketDetails> getTicketDetail(@PathVariable int pnr){
+    public ResponseEntity<Optional<Payment>> getTicketDetail(@PathVariable Integer pnr){
 
-        TicketDetails ticketDetails = flightBookingService.getTicketDetailsById(pnr);
+        Optional<Payment> ticketDetails = flightBookingService.getTicketDetailsById(pnr);
         System.out.println(ticketDetails + "print");
         return new ResponseEntity<>(ticketDetails, HttpStatus.OK);
     }
@@ -73,7 +72,7 @@ public class FlightBookingController {
 
     @CrossOrigin
     @PostMapping(value="postTicketDetails")
-    public ResponseEntity<String> postTicketDetails(@RequestBody TicketDetails ticketDetails) {
+    public ResponseEntity<String> postTicketDetails(@RequestBody Payment ticketDetails) {
 
         if (ticketDetails != null) {
 

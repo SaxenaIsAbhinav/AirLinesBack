@@ -1,8 +1,11 @@
 package com.flightbookingapp.controller;
 
 import com.flightbookingapp.entity.Payment;
+import com.flightbookingapp.exception.PaymentNotFoundException;
 import com.flightbookingapp.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,35 +18,45 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    // Create multiple payments (saving tickets for all passengers)
     @PostMapping
-    public Payment createPayment(@RequestBody Payment payment) {
-        return paymentService.createPayment(payment);
+    public ResponseEntity<List<Payment>> createPayments(@RequestBody List<Payment> payments) {
+        List<Payment> savedPayments = paymentService.createPayments(payments);
+        return new ResponseEntity<>(savedPayments, HttpStatus.CREATED);
     }
-    @CrossOrigin
+
+    // Get payment by PNR
     @GetMapping("/{pnr}")
-    public Payment getPaymentByPnr(@PathVariable Integer pnr) {
-        return paymentService.getPaymentByPnr(pnr);
+    public ResponseEntity<Payment> getPaymentByPnr(@PathVariable Integer pnr) {
+        Payment payment = paymentService.getPaymentByPnr(pnr);
+        return new ResponseEntity<>(payment, HttpStatus.OK);
     }
-    @CrossOrigin
+
+    // Get all payments
     @GetMapping
-    public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments();
+    public ResponseEntity<List<Payment>> getAllPayments() {
+        List<Payment> payments = paymentService.getAllPayments();
+        return new ResponseEntity<>(payments, HttpStatus.OK);
     }
-    @CrossOrigin
+
+    // Get payments by passenger name
     @GetMapping("/passenger/{name}")
-    public List<Payment> getPaymentsByPassenger(@PathVariable String name) {
-        return paymentService.getPaymentsByPassengerName(name);
+    public ResponseEntity<List<Payment>> getPaymentsByPassengerName(@PathVariable String name) {
+        List<Payment> payments = paymentService.getPaymentsByPassengerName(name);
+        return new ResponseEntity<>(payments, HttpStatus.OK);
     }
 
-    @CrossOrigin
+    // Update payment by PNR
     @PutMapping("/{pnr}")
-    public Payment updatePayment(@PathVariable Integer pnr, @RequestBody Payment payment) {
-        return paymentService.updatePayment(pnr, payment);
+    public ResponseEntity<Payment> updatePayment(@PathVariable Integer pnr, @RequestBody Payment paymentDetails) {
+        Payment updatedPayment = paymentService.updatePayment(pnr, paymentDetails);
+        return new ResponseEntity<>(updatedPayment, HttpStatus.OK);
     }
 
-    @CrossOrigin
+    // Delete payment by PNR
     @DeleteMapping("/{pnr}")
-    public void deletePayment(@PathVariable Integer pnr) {
+    public ResponseEntity<Void> deletePayment(@PathVariable Integer pnr) {
         paymentService.deletePayment(pnr);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

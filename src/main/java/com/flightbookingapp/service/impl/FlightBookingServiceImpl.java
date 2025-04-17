@@ -1,14 +1,13 @@
 package com.flightbookingapp.service.impl;
 
 import com.flightbookingapp.entity.PassengerDetails;
-import com.flightbookingapp.entity.TicketDetails;
+import com.flightbookingapp.entity.Payment;
 import com.flightbookingapp.repository.PassengerDetailRepository;
-import com.flightbookingapp.repository.TicketDetailRepository;
+import com.flightbookingapp.repository.PaymentRepository;
 import com.flightbookingapp.service.FlightBookingService;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.flightbookingapp.mapper.RequestMapper.buildPassengerDetails;
@@ -18,11 +17,11 @@ import static com.flightbookingapp.mapper.RequestMapper.buildTicketDetails;
 public class FlightBookingServiceImpl implements FlightBookingService {
 
     private final PassengerDetailRepository passengerDetailRepository;
-    private final TicketDetailRepository ticketDetailRepository;
+    private final PaymentRepository paymentRepository;
 
-    public FlightBookingServiceImpl(PassengerDetailRepository passengerDetailRepository, TicketDetailRepository ticketDetailRepository) {
+    public FlightBookingServiceImpl(PassengerDetailRepository passengerDetailRepository, PaymentRepository paymentRepository) {
         this.passengerDetailRepository = passengerDetailRepository;
-        this.ticketDetailRepository = ticketDetailRepository;
+        this.paymentRepository = paymentRepository;
     }
 
  //   _____________________________Fetching Profile Details___________________________________________________
@@ -55,15 +54,16 @@ public class FlightBookingServiceImpl implements FlightBookingService {
     //   _____________________________Fetching Ticket Details___________________________________________________
 
 
-    public TicketDetails getTicketDetailsById(int pnr){
-        TicketDetails ticketDetails = ticketDetailRepository.findById(pnr);
+    public Optional<Payment> getTicketDetailsById(Integer pnr){
+        Optional<Payment> ticketDetails = paymentRepository.findById(pnr);
         return ticketDetails;
     }
 
     //------------------------------Save Ticket Details______________________________
-    public String postTicketDetails(TicketDetails ticketDetails){
-        TicketDetails ticket =  ticketDetailRepository.save(buildTicketDetails(ticketDetails));
+    public String postTicketDetails(Payment ticketDetails){
+        Payment ticket =  paymentRepository.save(buildTicketDetails(ticketDetails));
         return "ok";
     }
+
 
 }

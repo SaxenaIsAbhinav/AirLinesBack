@@ -1,12 +1,8 @@
 package com.flightbookingapp.mapper;
 
-import jakarta.persistence.Column;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.flightbookingapp.entity.Payment;
 
 import com.flightbookingapp.entity.PassengerDetails;
-import com.flightbookingapp.entity.TicketDetails;
 
 public class RequestMapper {
     public static PassengerDetails buildPassengerDetails(PassengerDetails passengerDetails) {
@@ -22,8 +18,8 @@ public class RequestMapper {
 
     }
 
-    public static TicketDetails buildTicketDetails(TicketDetails ticketDetails) {
-        TicketDetails ticket = new TicketDetails();
+    public static Payment buildTicketDetails(Payment ticketDetails) {
+        Payment ticket = new Payment();
         ticket.setPnr(ticketDetails.getPnr());
         ticket.setPassenger_Name(ticketDetails.getPassenger_Name());
         ticket.setFlight_Number(ticketDetails.getFlight_Number());
